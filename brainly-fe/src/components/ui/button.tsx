@@ -13,8 +13,8 @@ export interface ButtonProps {
 }
 
 const variantStyles = new Map<Variants, string>([
-  ["primary", "bg-purple600 text-white hover:bg-blue-600"],
-  ["secondary", "bg-purple200 text-purple400 hover:bg-gray-600"],
+  ["primary", "bg-blue-600 text-white hover:bg-blue-800"],
+  ["secondary", "bg-blue-500 text-white hover:bg-blue-600"],
 ]);
 
 const sizeStyles = new Map<Sizes, string>([

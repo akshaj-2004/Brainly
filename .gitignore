@@ -1,0 +1,21 @@
+# === Node.js (backend + frontend) ===
+brainly/node_modules/
+brainly-fe/node_modules/
+
+# === Build artifacts ===
+brainly/dist/
+brainly-fe/.vite/
+
+# === Logs ===
+brainly/npm-debug.log*
+brainly-fe/npm-debug.log*
+*.log
+
+# === TypeScript ===
+brainly/tsconfig.tsbuildinfo
+brainly-fe/tsconfig.tsbuildinfo
+
+# === Vite ===
+brainly-fe/.eslintcache
+
+

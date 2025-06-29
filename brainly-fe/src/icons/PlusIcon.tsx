@@ -1,8 +1,10 @@
 import type { ReactElement } from "react"
-import { IconStyle, type IconProps } from "./index"
+import { HeightStyle, IconStyle, WidthStyle, type IconProps } from "./index"
 
 export const PlusIcon = (props: IconProps): ReactElement => {
-  const iconstyle = IconStyle.get(props.size) || ""
+  const size = props.size ? IconStyle.get(props.size)  : "";
+  const width = props.width ? WidthStyle.get(props.width) : "";
+  const height = props.height ? HeightStyle.get(props.height) : "";
 
   return (
     <svg
@@ -11,7 +13,7 @@ export const PlusIcon = (props: IconProps): ReactElement => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={iconstyle}
+      className={`${size} ${width} ${height}`}
     >
       <path
         strokeLinecap="round"

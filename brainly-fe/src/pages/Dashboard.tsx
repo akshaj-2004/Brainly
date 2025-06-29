@@ -9,61 +9,60 @@ import { useState } from 'react'
 
 export function Dashboard() {
   const [openModel, SetOpenModel] = useState(false)
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray100 flex">
+      
+      {/* Sidebar */}
+      <div className="w-64 bg-white shadow-md">
+        <Sidebar />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-8">
         
         {/* Header */}
-        <div className="flex justify-between items-center mb-6 p-4 bg-white rounded-2xl shadow">
-          <div className="text-2xl font-bold text-gray-800">
-            Brainly
-          </div>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-semibold text-gray-800">All Notes</h1>
           <div className="flex gap-4">
-            <Button 
-              variant="primary" 
-              size="lg" 
-              text="Add Content" 
-              startIcon={<PlusIcon size="md" />} 
-              onClick={() => SetOpenModel(true)} 
+            <Button
+              variant="secondary"
+              size="lg"
+              text="Share Brain"
+              startIcon={<ShareIcon size="md" />}
+              onClick={() => {}}
             />
-            <Button 
-              variant="secondary" 
-              size="lg" 
-              text="Share Brain" 
-              startIcon={<ShareIcon size="md" />} 
-              onClick={() => {}} 
+            <Button
+              variant="primary"
+              size="lg"
+              text="Add Content"
+              startIcon={<PlusIcon size="md" />}
+              onClick={() => SetOpenModel(true)}
             />
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex gap-4">
-          
-          {/* Sidebar */}
-          <div className="w-64">
-            <Sidebar />
-          </div>
+        {/* Modal */}
+        <ContentModel
+          open={openModel}
+          onClose={() => SetOpenModel(false)}
+        />
 
-          {/* Cards + Modal */}
-          <div className="flex-1">
-            <ContentModel 
-              open={openModel} 
-              onClose={() => SetOpenModel(false)} 
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <Card
+              key={index}
+              title="Future Projects"
+              link="https://www.youtube.com/embed/nq82V5OpapE?si=NoLcrEH-55UuZm21"
+              
             />
-            
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <Card 
-                  key={index}
-                  title="Ideas"
-                  link="https://www.youtube.com/embed/nq82V5OpapE?si=NoLcrEH-55UuZm21"
-                />
-              ))}
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </div>
   )
 }
+
+
+

@@ -1,15 +1,18 @@
-import type { ReactElement } from "react";
+import type { FormEvent, ReactElement } from "react";
 
 type Variants = "primary" | "secondary";
 type Sizes = "sm" | "md" | "lg"
 
-export interface ButtonProps {
-  variant: Variants;
-  size: Sizes;
-  text: string;
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: Variants;                         // default = "primary"
+  size: Sizes;                              // default = "md"
+  text: string;                             // optional if you pass children
   startIcon?: ReactElement;
   endIcon?: ReactElement;
-  onClick?: () => void;
+  onClick?: (
+    e?: FormEvent<Element>  // event optional → can omit param
+  ) => void | Promise<void>;
 }
 
 const variantStyles = new Map<Variants, string>([

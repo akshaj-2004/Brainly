@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JWT_SECRET } from "./config";
+
+interface AuthPayLoad extends JwtPayload {
+    id: string
+}
 
 export const UserMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
-    const decoded = jwt.verify(token as string, JWT_SECRET) 
+    const decoded = jwt.verify(token as string, JWT_SECRET) as AuthPayLoad
     if(decoded){
-        //@ts-ignore
         req.userId = decoded.id
         next();
     }else{
@@ -14,5 +17,4 @@ export const UserMiddleware = (req: Request, res: Response, next: NextFunction) 
             msg: "u are not logged in"
         })
     }
-
 }

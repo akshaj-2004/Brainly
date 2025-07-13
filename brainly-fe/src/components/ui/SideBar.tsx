@@ -18,7 +18,7 @@ export const Sidebar = (): ReactElement => {
       <nav className="flex flex-col gap-2">
         <SideBarItems icon={<TwitterIcon width="sm" height="sm" />} text="Twitter" />
         <SideBarItems icon={<YoutubeIcon width="sm" height="sm" />} text="YouTube" />
-        <SideBarItems icon={<DocumentIcon width="sm" height="sm" />} text="Document" />
+        <SideBarItems icon={<DocumentIcon width="sm" height="sm" />} text="Notion" />
       </nav>
     </div>
   );

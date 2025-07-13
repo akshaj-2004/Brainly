@@ -6,9 +6,35 @@ import { Card } from '../components/ui/Card'
 import { ContentModel } from '../components/ui/ContentModel'
 import { Sidebar } from '../components/ui/SideBar'
 import { useState } from 'react'
+import axios from 'axios'
+import { BACKEND_URL } from '../config'
 
 export function Dashboard() {
   const [openModel, SetOpenModel] = useState(false)
+  const [ytdata, setYtdata] = useState([]);
+  const [twitterdata, seTtwitterdata] = useState([]);
+  const [notiondata, setNotiondata] = useState([]);
+  const [share, setShare] = useState(false);
+
+    async function shareFun() {
+    try {
+      setShare(true);                 
+      const { data } = await axios.post<{ url: string }>(
+        `${BACKEND_URL}/api/v1/brain/share`,
+        { share }
+      );
+
+      await navigator.clipboard.writeText(data.url);
+
+      alert("Share link copied to clipboard!");
+    } catch (err) {
+      console.error("Share failed:", err);
+      alert("Unable to create share link. Please try again.");
+    } finally {
+      setShare(false);                
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-gray100 flex">
@@ -30,7 +56,7 @@ export function Dashboard() {
               size="lg"
               text="Share Brain"
               startIcon={<ShareIcon size="md" />}
-              onClick={() => {}}
+              onClick={shareFun}
             />
             <Button
               variant="primary"

@@ -24,17 +24,14 @@ router.post("/api/v1/content", async (req: Request, res: Response) => {
   }
 
   try {
-    const tagIds: Types.ObjectId[] = [];
-
     for (const title of tags) {
       let tagDoc = await TagModel.findOne({ title });
       if (!tagDoc) {
         tagDoc = await TagModel.create({ title }); 
-      }
-      tagIds.push(tagDoc._id);                    
+      }                    
     }
 
-    await ContentModel.create({ link, type, title, tags: tagIds, userId });
+    await ContentModel.create({ link, type, title, tags, userId });
 
     return res.status(201).json({ message: "Content saved successfully" });
   } catch (err: any) {
@@ -75,8 +72,6 @@ router.delete("/api/v1/content", async (req: Request, res: Response) => {
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Content not found or unauthorized" });
         }
-
-        // ✅ Send success message with 200 OK
         return res.status(200).json({ message: "Deleted successfully" });
     } catch (err: any) {
         console.error("Err(catch):", err);

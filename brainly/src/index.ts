@@ -4,6 +4,7 @@ import "./db";
 
 import userRoutes from "./routes/UserRoutes";
 import crudRoutes from "./routes/crudRoutes";
+import { PORT } from "./config";
 
 const app = express();
 
@@ -13,6 +14,6 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(crudRoutes);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("app started on port 3000");
 });

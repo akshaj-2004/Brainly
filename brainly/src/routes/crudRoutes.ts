@@ -8,10 +8,7 @@ import cors from "cors"
 
 const router = Router();
 router.use(UserMiddleware);
-router.use(cors({
-  origin: "http://localhost:5173", 
-  credentials: true
-}));
+router.use(cors());
 
 // POST /content — Save content
 router.post("/api/v1/content", async (req: Request, res: Response) => {

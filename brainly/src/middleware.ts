@@ -8,13 +8,16 @@ interface AuthPayLoad extends JwtPayload {
 
 export const UserMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
-    const decoded = jwt.verify(token as string, JWT_SECRET) as AuthPayLoad
-    if(decoded){
-        req.userId = decoded.id
+
+    if (!token) {
+        return res.status(401).json({ msg: "Authorization token missing or malformed" });
+    }
+    
+     try {
+        const decoded = jwt.verify(token, JWT_SECRET) as AuthPayLoad;
+        req.userId = decoded.id;
         next();
-    }else{
-        res.status(403).json({
-            msg: "u are not logged in"
-        })
+    } catch (err) {
+        return res.status(403).json({ msg: "Invalid or expired token" });
     }
 }

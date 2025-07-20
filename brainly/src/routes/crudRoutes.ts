@@ -82,57 +82,57 @@ router.delete("/api/v1/content", async (req: Request, res: Response) => {
 });
 
 
-// POST /brain/share — Create or remove share link
-router.post("/api/v1/brain/share", async (req: Request, res: Response) => {
-  const { share } = req.body;
-  console.log(share)
-  const userId = req.userId;
+// // POST /brain/share — Create or remove share link
+// router.post("/api/v1/brain/share", async (req: Request, res: Response) => {
+//   const { share } = req.body;
+//   console.log(share)
+//   const userId = req.userId;
 
-  try {
-    if (share) {
-      const hash = rand(10);
-      await LinkModel.updateOne(
-        { userId },
-        { userId, hash },
-        { upsert: true }
-      );
+//   try {
+//     if (share) {
+//       const hash = rand(10);
+//       await LinkModel.updateOne(
+//         { userId },
+//         { userId, hash },
+//         { upsert: true }
+//       );
 
-      return res.json({
-        msg: "Share link created",
-        url: `${BACKEND_URL}/api/v1/brain/${hash}`,
-      });
-    } else {
-      await LinkModel.deleteOne({ userId });
-      return res.json({ msg: "Share link removed" });
-    }
-  } catch (err: any) {
-    console.error("Err(catch):", err);
-    return res.status(500).json({ message: "Server error" });
-  }
-});
+//       return res.json({
+//         msg: "Share link created",
+//         url: `${BACKEND_URL}/api/v1/brain/${hash}`,
+//       });
+//     } else {
+//       await LinkModel.deleteOne({ userId });
+//       return res.json({ msg: "Share link removed" });
+//     }
+//   } catch (err: any) {
+//     console.error("Err(catch):", err);
+//     return res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 
-// GET /brain/:shareLink — Get shared content
-router.get("/api/v1/brain/:shareLink", async (req: Request, res: Response) => {
-    const hash = req.params.shareLink;
+// // GET /brain/:shareLink — Get shared content
+// router.get("/api/v1/brain/:shareLink", async (req: Request, res: Response) => {
+//     const hash = req.params.shareLink;
 
-    try {
-        const link = await LinkModel.findOne({ hash });
-        if (!link) {
-            return res.status(404).json({ message: "Invalid or expired link" });
-        }
+//     try {
+//         const link = await LinkModel.findOne({ hash });
+//         if (!link) {
+//             return res.status(404).json({ message: "Invalid or expired link" });
+//         }
 
-        const brain = await ContentModel.find({ userId: link.userId });
-        const user = await UserModel.findById(link.userId, "username");
+//         const brain = await ContentModel.find({ userId: link.userId });
+//         const user = await UserModel.findById(link.userId, "username");
 
-        return res.status(200).json({
-            username: user?.username,
-            content: brain,
-        });
-    } catch (err: any) {
-        console.error("Err(catch):", err);
-        return res.status(500).json({ message: "Server error" });
-    }
-});
+//         return res.status(200).json({
+//             username: user?.username,
+//             content: brain,
+//         });
+//     } catch (err: any) {
+//         console.error("Err(catch):", err);
+//         return res.status(500).json({ message: "Server error" });
+//     }
+// });
 
 export default router;

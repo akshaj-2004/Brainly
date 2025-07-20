@@ -1,7 +1,7 @@
 import '../App.css';
 import { Button } from '../components/ui/button';
 import { PlusIcon } from '../icons/PlusIcon';
-import { ShareIcon } from '../icons/ShareIcon';
+// import { ShareIcon } from '../icons/ShareIcon';
 import { Card } from '../components/ui/Card';
 import { ContentModel } from '../components/ui/ContentModel';
 import { Sidebar } from '../components/ui/SideBar';
@@ -13,7 +13,7 @@ export function Dashboard() {
   const [openModel, setOpenModel] = useState(false);
   const [allData, setAllData] = useState<any[]>([]);
   const [filteredContent, setFilteredContent] = useState<any[]>([]);
-  const [share, setShare] = useState(false);
+  // const [share, setShare] = useState(false);
 
   const fetchContent = async () => {
     try {
@@ -47,27 +47,27 @@ export function Dashboard() {
     setFilteredContent(prev => prev.filter(item => item._id !== id));
   };
 
-  const shareFun = async () => {
-    setShare(true);
-    try {
-      const { data } = await axios.post<{ url: string }>(
-        `${BACKEND_URL}/api/v1/brain/share`,
-        {share},
-        {
-          headers: {
-            authorization: localStorage.getItem("token")
-          }
-        }
-      );
-      await navigator.clipboard.writeText(data.url);
-      alert("Share link copied to clipboard!");
-    } catch (err) {
-      console.error("Share failed:", err);
-      alert("Unable to create share link. Please try again.");
-    } finally {
-      setShare(false);
-    }
-  };
+  // const shareFun = async () => {
+  //   setShare(true);
+  //   try {
+  //     const { data } = await axios.post<{ url: string }>(
+  //       `${BACKEND_URL}/api/v1/brain/share`,
+  //       {share},
+  //       {
+  //         headers: {
+  //           authorization: localStorage.getItem("token")
+  //         }
+  //       }
+  //     );
+  //     await navigator.clipboard.writeText(data.url);
+  //     alert("Share link copied to clipboard!");
+  //   } catch (err) {
+  //     console.error("Share failed:", err);
+  //     alert("Unable to create share link. Please try again.");
+  //   } finally {
+  //     setShare(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gray100 flex">

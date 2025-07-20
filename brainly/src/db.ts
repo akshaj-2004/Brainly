@@ -1,16 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 import { connectionString } from "./config";
 
-export const contentTypes = ["image", "video", "article", "audio"] as const;
-
-export const defaultTagSuggestions = [
-  "Productivity",
-  "Tech & Tools",
-  "Mindset",
-  "Learning & Skills",
-  "Workflows",
-  "Inspiration",
-] as const;
+export const contentTypes = ["Youtube", "Twitter", "Notion"] as const;
 
 async function connect() {
   try {
@@ -35,7 +26,7 @@ const ContentSchema = new Schema({
   link:  { type: String, required: true },
   type:  { type: String, enum: contentTypes, required: true },
   title: { type: String, required: true },
-  tags:  [{ type: String, ref: "Tag" }],   
+  tags:  { type: String, ref: "Tag" },   
   userId:{ type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 

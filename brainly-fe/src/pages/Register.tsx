@@ -49,13 +49,23 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
         username,
         password,
       });
 
-      alert("You have signed in!");
-      navigate("/Dashboard");
+      console.log(response.data);
+
+      const { token } = response.data;
+      console.log(token)
+
+      if (token) {
+        localStorage.setItem("token", token);
+        alert("You have signed in!");
+        navigate("/Dashboard");
+      } else {
+        alert("Invalid server response");
+      }
     } catch (err) {
       console.error("Signin failed:", err);
       alert("Signin failed. Please try again.");
@@ -69,7 +79,7 @@ const RegisterPage: React.FC = () => {
       <div className="h-screen w-[30vw] bg-slate-300 ml-32 flex flex-col justify-center items-center">
         <div>
           <h1 className="text-3xl font-semibold">
-            Welcome to <span className="text-blue-400">Second Brain</span>
+            Welcome to <span className="text-blue-400">Brainly</span>
           </h1>
 
           <p className="mt-1 text-2xl font-semibold">Create your account</p>

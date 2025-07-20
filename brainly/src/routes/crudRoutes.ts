@@ -4,23 +4,25 @@ import { UserMiddleware } from "../middleware";
 import { rand } from "../utils";
 import { BACKEND_URL } from "../config";
 import { Types } from "mongoose";
+import cors from "cors"
 
 const router = Router();
 router.use(UserMiddleware);
+router.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true
+}));
 
 // POST /content — Save content
 router.post("/api/v1/content", async (req: Request, res: Response) => {
-  const { link, type, title, tags = [] } = req.body;
+  const { link, type, title, tags } = req.body;
   const userId = req.userId;
 
-  if (!link || !type || !title || !userId) {
+  if (!link || !type || !title|| !userId) {
     return res.status(400).json({ message: "All fields are required" });
   }
   if (!contentTypes.includes(type)) {
     return res.status(400).json({ message: "Invalid content type" });
-  }
-  if (!Array.isArray(tags)) {
-    return res.status(400).json({ message: "Tags must be an array" });
   }
 
   try {
@@ -83,6 +85,7 @@ router.delete("/api/v1/content", async (req: Request, res: Response) => {
 // POST /brain/share — Create or remove share link
 router.post("/api/v1/brain/share", async (req: Request, res: Response) => {
   const { share } = req.body;
+  console.log(share)
   const userId = req.userId;
 
   try {

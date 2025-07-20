@@ -1,9 +1,6 @@
-const connectionString = "mongodb+srv://akshajpvss:hRq6KGYnyFYdwaGC@cluster0.dme2q.mongodb.net/brainly"
-const JWT_SECRET = '123123';
-const BACKEND_URL = 'http://localhost:300'
+import dotenv from "dotenv";
+dotenv.config();
 
-export {
-    connectionString,
-    JWT_SECRET,
-    BACKEND_URL
-}
+export const connectionString = process.env.MONGO_URI!;
+export const JWT_SECRET = process.env.JWT_SECRET!;
+export const BACKEND_URL = process.env.BACKEND_URL!;
